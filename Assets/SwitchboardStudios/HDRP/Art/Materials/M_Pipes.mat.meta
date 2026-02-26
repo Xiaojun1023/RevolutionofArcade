@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: be96c0e83cf518c43b40806c1a680358
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 347434
+  packageName: Arcade Game Saloon
+  packageVersion: 1.0
+  assetPath: Assets/SwitchboardStudios/HDRP/Art/Materials/M_Pipes.mat
+  uploadId: 826464

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MainArcadeScene.unity
+    guid: 041487d19c6124b8886368ab6ef1aeb9
+  - enabled: 1
+    path: Assets/Scenes/TennisforTwoScene.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/TableTennisScene.unity
+    guid: ec512e277ffabc94c8d214d3d1c4f243
+  - enabled: 0
+    path: Assets/SandBox/Xiaoyu/XiaoyuScene.unity
+    guid: 3ae492e1173da4872a5b7438d5a89d94
+  - enabled: 0
+    path: Assets/SandBox/Jun/InitialArcadeStore.unity
+    guid: 4af868c6939ba8241bf27442fd27f6ac
+  - enabled: 0
+    path: Assets/SandBox/Xiaoyu/ZoomInZoomOut/Scenes/MainWorld.unity
+    guid: 47daebbd3f552344fa88cd6917563739
+  - enabled: 0
+    path: Assets/SandBox/Xiaoyu/ZoomInZoomOut/Scenes/ArcadeWorld.unity
+    guid: 8429928be37539a41b73c799a86b9081
+  m_configObjects:
+    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_UseUCBPForAssetBundles: 0

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: daaa79cac105ddc4297ece2a72cd6e52
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 347434
+  packageName: Arcade Game Saloon
+  packageVersion: 1.0
+  assetPath: Assets/SwitchboardStudios/HDRP/Art/Animations/Camera 5.controller
+  uploadId: 826464

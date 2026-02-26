@@ -1,0 +1,123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5934357448215114192
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1030977454, guid: abc00000000018371736129472563666, type: 3}
+      propertyPath: m_Name
+      value: CoinMachine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030977454, guid: abc00000000018371736129472563666, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030977455, guid: abc00000000018371736129472563666, type: 3}
+      propertyPath: m_RootOrder
+      value: 282
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030977455, guid: abc00000000018371736129472563666, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030977455, guid: abc00000000018371736129472563666, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030977455, guid: abc00000000018371736129472563666, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030977455, guid: abc00000000018371736129472563666, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 26.271788
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030977455, guid: abc00000000018371736129472563666, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.806096
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030977455, guid: abc00000000018371736129472563666, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 24.65825
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030977455, guid: abc00000000018371736129472563666, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.007155003
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030977455, guid: abc00000000018371736129472563666, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030977455, guid: abc00000000018371736129472563666, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.9999744
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030977455, guid: abc00000000018371736129472563666, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030977455, guid: abc00000000018371736129472563666, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1030977456, guid: abc00000000018371736129472563666, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1030977454, guid: abc00000000018371736129472563666, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3264086160440098779}
+    - targetCorrespondingSourceObject: {fileID: 1030977454, guid: abc00000000018371736129472563666, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1831721064254096736}
+  m_SourcePrefab: {fileID: 100100000, guid: abc00000000018371736129472563666, type: 3}
+--- !u!1 &5934357448541161086 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1030977454, guid: abc00000000018371736129472563666, type: 3}
+  m_PrefabInstance: {fileID: 5934357448215114192}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &3264086160440098779
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5934357448541161086}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.08, y: 1.5, z: 0.61}
+  m_Center: {x: 0.35, y: 0.75, z: 0}
+--- !u!114 &1831721064254096736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5934357448541161086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbb62ff69d2cc404d9e877902cbb5f8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TicketMachineInteract
+  coinsPerPress: 1
+  interactKey: 101
+  promptUI: {fileID: 0}
+  faceDotThreshold: 0.7

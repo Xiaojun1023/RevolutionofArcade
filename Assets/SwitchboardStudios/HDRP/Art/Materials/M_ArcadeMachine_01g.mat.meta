@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8e5cd54b69380184795f88b67932a1d4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 347434
+  packageName: Arcade Game Saloon
+  packageVersion: 1.0
+  assetPath: Assets/SwitchboardStudios/HDRP/Art/Materials/M_ArcadeMachine_01g.mat
+  uploadId: 826464

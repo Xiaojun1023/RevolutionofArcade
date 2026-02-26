@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5c60de3967127a54f8071ef8a08f8b78
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 347434
+  packageName: Arcade Game Saloon
+  packageVersion: 1.0
+  assetPath: Assets/SwitchboardStudios/HDRP/Scene/HDRP_ArcadeGameSaloon/README_About_ExtraFogs.txt
+  uploadId: 826464
