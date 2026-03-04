@@ -21,6 +21,10 @@ public class ArcadeMachineSession : MonoBehaviour
 
     public Texture idleScreenshot;
 
+    public SimplePromptUI promptUI;
+
+    public bool IsInSession { get; private set; }
+
     Vector3 camPosBefore;
     Quaternion camRotBefore;
     bool camSaved;
@@ -33,8 +37,12 @@ public class ArcadeMachineSession : MonoBehaviour
         if (gameCaptureCamera != null)
             gameCaptureCamera.enabled = false;
 
+        if (promptUI != null)
+            promptUI.Hide();
+
         SetPlayerControl(true);
         FillRTWithIdle();
+        IsInSession = false;
     }
 
     void Update()
@@ -47,6 +55,12 @@ public class ArcadeMachineSession : MonoBehaviour
     {
         if (loaded) return;
         if (running != null) return;
+
+        IsInSession = true;
+
+        if (promptUI != null)
+            promptUI.Hide();
+
         running = StartCoroutine(LoadRoutine());
     }
 
@@ -54,6 +68,10 @@ public class ArcadeMachineSession : MonoBehaviour
     {
         if (!loaded) return;
         if (running != null) return;
+
+        if (promptUI != null)
+            promptUI.Hide();
+
         running = StartCoroutine(UnloadRoutine());
     }
 
@@ -99,6 +117,7 @@ public class ArcadeMachineSession : MonoBehaviour
 
         loaded = false;
         running = null;
+        IsInSession = false;
     }
 
     void FillRTWithIdle()

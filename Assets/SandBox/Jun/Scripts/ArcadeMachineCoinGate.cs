@@ -17,21 +17,24 @@ public class ArcadeMachineCoinGate : MonoBehaviour
 
     void Start()
     {
-        if (promptUI != null)
-            promptUI.Hide();
+        if (promptUI != null) promptUI.Hide();
     }
 
     void Update()
     {
+        if (session != null && session.IsInSession)
+        {
+            SetPrompt(false, "");
+            return;
+        }
+
         if (walletInRange == null || playerTransform == null)
         {
             SetPrompt(false, "");
             return;
         }
 
-        bool facing = IsPlayerFacingMachine();
-
-        if (!facing)
+        if (!IsPlayerFacingMachine())
         {
             SetPrompt(false, "");
             return;
@@ -44,16 +47,13 @@ public class ArcadeMachineCoinGate : MonoBehaviour
         {
             if (walletInRange.TrySpendCoins(coinCostToPlay))
             {
-                if (promptUI != null)
-                    promptUI.Show("Starting Game");
-
-                if (session != null)
-                    session.TryStartSession();
+                SetPrompt(false, "");
+                if (promptUI != null) promptUI.Show("Starting Game");
+                if (session != null) session.TryStartSession();
             }
             else
             {
-                if (promptUI != null)
-                    promptUI.Show("No Coins");
+                if (promptUI != null) promptUI.Show("No Coins");
             }
         }
     }

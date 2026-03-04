@@ -282,6 +282,9 @@ MonoBehaviour:
   screenLookAt: {fileID: 0}
   zoomDuration: 0.35
   exitKey: 27
+  forceAspect: 1
+  contentAspect: 1.7777778
+  idleScreenshot: {fileID: 0}
 --- !u!114 &868402949884742463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,7 +358,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 369a47ef714d4e645be66fa10099252f, type: 2}
+  - {fileID: 2100000, guid: b689e26f83fd4dc4a9bd9cf4d74f1d9a, type: 2}
   - {fileID: 2100000, guid: 965b9d1b9a7f8054ebfb4afdc94c6939, type: 2}
   - {fileID: 2100000, guid: 13cc812ad49b9f04b92f095dc7132fea, type: 2}
   m_StaticBatchInfo:
@@ -447,7 +450,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 369a47ef714d4e645be66fa10099252f, type: 2}
+  - {fileID: 2100000, guid: b689e26f83fd4dc4a9bd9cf4d74f1d9a, type: 2}
   - {fileID: 2100000, guid: 965b9d1b9a7f8054ebfb4afdc94c6939, type: 2}
   - {fileID: 2100000, guid: 13cc812ad49b9f04b92f095dc7132fea, type: 2}
   m_StaticBatchInfo:

@@ -50,7 +50,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _CastShadows: 1
     - _Number_of_Rows: 1
+    - _ReceiveShadows: 1
     - _Speed: 0
     - _X_Offset: 0
     - _X_Tiling: 1

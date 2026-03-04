@@ -16019,7 +16019,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 40, y: -20}
+  m_AnchoredPosition: {x: 45, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &947011346
@@ -16370,6 +16370,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 9215623955657798875, guid: 69297256cf40ce140ac7044dd48a5391, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 369a47ef714d4e645be66fa10099252f, type: 2}
     - target: {fileID: 9215623955657798877, guid: 69297256cf40ce140ac7044dd48a5391, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -16419,6 +16423,7 @@ MonoBehaviour:
   forceAspect: 1
   contentAspect: 1.7777778
   idleScreenshot: {fileID: 2800000, guid: 125d78073d33dcb42949bd15279fc78f, type: 3}
+  promptUI: {fileID: 322143214}
 --- !u!114 &966452604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76737,6 +76742,7 @@ MonoBehaviour:
   forceAspect: 1
   contentAspect: 1.7777778
   idleScreenshot: {fileID: 2800000, guid: 125d78073d33dcb42949bd15279fc78f, type: 3}
+  promptUI: {fileID: 322143214}
 --- !u!1001 &1240664623
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -79059,6 +79065,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 2221888043016938571, guid: 69297256cf40ce140ac7044dd48a5391, type: 3}
+      propertyPath: promptUI
+      value: 
+      objectReference: {fileID: 322143214}
     - target: {fileID: 2221888043016938571, guid: 69297256cf40ce140ac7044dd48a5391, type: 3}
       propertyPath: playerCamera
       value: 
