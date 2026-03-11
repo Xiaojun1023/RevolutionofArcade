@@ -17,11 +17,18 @@ public class MousePaddle_NoDepth : MonoBehaviour
     float velY;
     float velZ;
 
+    Vector3 lastPosition;
+    Vector3 velocity;
+
+    public Vector3 Velocity => velocity;
+
     void Start()
     {
         fixedX = transform.position.x;
         targetY = transform.position.y;
         targetZ = transform.position.z;
+
+        lastPosition = transform.position;
 
         LockCursor(true);
     }
@@ -47,6 +54,10 @@ public class MousePaddle_NoDepth : MonoBehaviour
         pos.z = Mathf.SmoothDamp(pos.z, targetZ, ref velZ, smoothTime);
 
         transform.position = pos;
+
+        float dt = Mathf.Max(Time.deltaTime, 0.0001f);
+        velocity = (transform.position - lastPosition) / dt;
+        lastPosition = transform.position;
     }
 
     void LockCursor(bool locked)

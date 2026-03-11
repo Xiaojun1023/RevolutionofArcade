@@ -571,7 +571,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 780952512}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
@@ -952,8 +952,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57e18e3411083f2488ff421b7e819968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BallController
-  leftPaddleX: -1.35
-  rightPaddleX: 1.35
   tableY: 0.82
   ballRadius: 0.1
   netX: 0
@@ -966,15 +964,29 @@ MonoBehaviour:
   stickYVel: 0.8
   hitCooldown: 0.06
   pushOut: 0.06
-  extraLift: 0
+  extraLift: -0.5
   rallyLandingMinFromNet: 0.5
   rallyLandingMaxFromNet: 0.7
-  rallyFlightTime: 0.5
+  rallyFlightTime: 0.65
+  safeZPadding: 0.28
   serveLandingMinFromNet: 0.95
   serveLandingMaxFromNet: 1.25
-  serveFlightTime: 0.45
+  serveFlightTime: 0.55
   serveNetClearance: 0.01
-  serveExtraLift: -0.2
+  serveExtraLift: -0.6
+  serveSafeZPadding: 0.12
+  spinInputScale: 0.2
+  maxSpin: 10
+  topspinDownForce: 2.2
+  spinDecay: 1.2
+  bounceSpinForwardBoost: 0.22
+  bounceSpinVerticalBoost: 0.1
+  sideSpinInputScale: 0.1
+  maxSideSpin: 3.8
+  sideSpinCurveForce: 1.35
+  sideSpinDecay: 1.05
+  bounceSideSpinBoost: 0.03
+  sideTargetZInfluence: 0.07
 --- !u!4 &845726006 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1291743089180749403, guid: 5fecca7fcae2d06439e097fb18e80a25, type: 3}

@@ -2,47 +2,66 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-    public float leftPaddleX = -1.35f;
-    public float rightPaddleX = 1.35f;
-
+    [Header("Table / Ball")]
     public float tableY = 0.82f;
     public float ballRadius = 0.1f;
-
     public float netX = 0f;
     public float netTopY = 0.98f;
     public float netClearance = 0.02f;
-
     public float zMin = -0.7f;
     public float zMax = 0.7f;
-
     public float gravity = 9.8f;
 
+    [Header("Bounce")]
     public float bounce = 0.7f;
     public float stickYVel = 0.8f;
 
+    [Header("Hit")]
     public float hitCooldown = 0.06f;
     public float pushOut = 0.06f;
 
+    [Header("Rally")]
     public float extraLift = 0f;
-
-    public float rallyLandingMinFromNet = 0.4f;
+    public float rallyLandingMinFromNet = 0.5f;
     public float rallyLandingMaxFromNet = 0.7f;
     public float rallyFlightTime = 0.5f;
+    public float safeZPadding = 0.18f;
 
+    [Header("Serve")]
     public float serveLandingMinFromNet = 0.95f;
     public float serveLandingMaxFromNet = 1.25f;
-    public float serveFlightTime = 0.35f;
+    public float serveFlightTime = 0.45f;
     public float serveNetClearance = 0.01f;
     public float serveExtraLift = -0.2f;
+    public float serveSafeZPadding = 0.12f;
+
+    [Header("Top / Back Spin")]
+    public float spinInputScale = 0.35f;
+    public float maxSpin = 30f;
+    public float topspinDownForce = 10f;
+    public float spinDecay = 0.2f;
+    public float bounceSpinForwardBoost = 0.8f;
+    public float bounceSpinVerticalBoost = 0.2f;
+
+    [Header("Side Spin")]
+    public float sideSpinInputScale = 0.22f;
+    public float maxSideSpin = 10f;
+    public float sideSpinCurveForce = 2.2f;
+    public float sideSpinDecay = 0.35f;
+    public float bounceSideSpinBoost = 0.02f;
+    public float sideTargetZInfluence = 0.06f;
 
     Vector3 vel;
     float nextHitTime;
     bool frozen;
 
-    public float GroundY => tableY + ballRadius;
-    public Vector3 Velocity => vel;
+    float spinY;
+    float spinZ;
 
     Vector3 lastPos;
+
+    public float GroundY => tableY + ballRadius;
+    public Vector3 Velocity => vel;
 
     void Start()
     {
@@ -60,9 +79,21 @@ public class BallController : MonoBehaviour
         float dt = Time.deltaTime;
 
         Vector3 p0 = transform.position;
-
         Vector3 velStep = vel;
+
         velStep.y -= gravity * dt;
+
+        if (Mathf.Abs(spinY) > 0.0001f)
+        {
+            velStep.y -= spinY * topspinDownForce * dt;
+            spinY = Mathf.MoveTowards(spinY, 0f, spinDecay * dt);
+        }
+
+        if (Mathf.Abs(spinZ) > 0.0001f)
+        {
+            velStep.z += spinZ * sideSpinCurveForce * dt;
+            spinZ = Mathf.MoveTowards(spinZ, 0f, sideSpinDecay * dt);
+        }
 
         Vector3 p1 = p0 + velStep * dt;
 
@@ -92,9 +123,16 @@ public class BallController : MonoBehaviour
         {
             p.y = gy;
 
+            float spinSign = Mathf.Sign(vel.x);
+            vel.x += spinSign * spinY * bounceSpinForwardBoost;
+            vel.y += spinY * bounceSpinVerticalBoost;
+            vel.z += spinZ * bounceSideSpinBoost;
+
             if (Mathf.Abs(vel.y) < stickYVel) vel.y = 0f;
             else vel.y = -vel.y * bounce;
         }
+
+        p.z = Mathf.Clamp(p.z, zMin - 0.2f, zMax + 0.2f);
 
         transform.position = p;
         lastPos = transform.position;
@@ -119,7 +157,10 @@ public class BallController : MonoBehaviour
 
         float landDist = Random.Range(serveLandingMinFromNet, serveLandingMaxFromNet);
         float landingX = netX + dx * landDist;
-        float targetZ = Random.Range(zMin, zMax);
+
+        float safeMinZ = zMin + serveSafeZPadding;
+        float safeMaxZ = zMax - serveSafeZPadding;
+        float targetZ = Random.Range(safeMinZ, safeMaxZ);
 
         float T = Mathf.Max(serveFlightTime, 0.15f) / Mathf.Max(serveSpeedScale, 0.01f);
 
@@ -139,6 +180,8 @@ public class BallController : MonoBehaviour
         }
 
         vel = new Vector3(vx, vy, vz);
+        spinY = 0f;
+        spinZ = 0f;
         frozen = false;
         nextHitTime = 0f;
     }
@@ -160,9 +203,19 @@ public class BallController : MonoBehaviour
         if (p.y < GroundY) p.y = GroundY;
         transform.position = p;
 
+        Vector3 paddleVelocity = GetPaddleVelocity(other);
+
+        spinY = Mathf.Clamp(paddleVelocity.y * spinInputScale, -maxSpin, maxSpin);
+        spinZ = Mathf.Clamp(paddleVelocity.z * sideSpinInputScale, -maxSideSpin, maxSideSpin);
+
         float landDist = Random.Range(rallyLandingMinFromNet, rallyLandingMaxFromNet);
         float landingX = netX + dx * landDist;
-        float targetZ = Random.Range(zMin, zMax);
+
+        float safeMinZ = zMin + safeZPadding;
+        float safeMaxZ = zMax - safeZPadding;
+        float baseTargetZ = Random.Range(safeMinZ, safeMaxZ);
+        float spinOffsetZ = Mathf.Clamp(spinZ * sideTargetZInfluence, -safeZPadding * 0.6f, safeZPadding * 0.6f);
+        float targetZ = Mathf.Clamp(baseTargetZ + spinOffsetZ, safeMinZ, safeMaxZ);
 
         float T = Mathf.Max(rallyFlightTime, 0.15f);
 
@@ -182,6 +235,17 @@ public class BallController : MonoBehaviour
         }
 
         vel = new Vector3(vx, vy, vz);
+    }
+
+    Vector3 GetPaddleVelocity(Collider other)
+    {
+        MousePaddle_NoDepth playerPaddle = other.GetComponent<MousePaddle_NoDepth>();
+        if (playerPaddle != null) return playerPaddle.Velocity;
+
+        PaddleAI_NoDepth aiPaddle = other.GetComponent<PaddleAI_NoDepth>();
+        if (aiPaddle != null) return aiPaddle.Velocity;
+
+        return Vector3.zero;
     }
 
     bool ClearsNet(Vector3 p0, Vector3 v0, float T)

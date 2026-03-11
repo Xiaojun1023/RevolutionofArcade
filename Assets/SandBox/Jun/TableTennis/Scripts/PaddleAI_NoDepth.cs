@@ -16,12 +16,19 @@ public class PaddleAI_NoDepth : MonoBehaviour
     float targetZ;
     float nextUpdate;
 
+    Vector3 lastPosition;
+    Vector3 velocity;
+
+    public Vector3 Velocity => velocity;
+
     void Start()
     {
         fixedX = transform.position.x;
         targetY = transform.position.y;
         targetZ = transform.position.z;
         nextUpdate = 0f;
+
+        lastPosition = transform.position;
     }
 
     void Update()
@@ -40,5 +47,9 @@ public class PaddleAI_NoDepth : MonoBehaviour
         pos.y = Mathf.Lerp(pos.y, targetY, followSpeed * Time.deltaTime);
         pos.z = Mathf.Lerp(pos.z, targetZ, followSpeed * Time.deltaTime);
         transform.position = pos;
+
+        float dt = Mathf.Max(Time.deltaTime, 0.0001f);
+        velocity = (transform.position - lastPosition) / dt;
+        lastPosition = transform.position;
     }
 }
