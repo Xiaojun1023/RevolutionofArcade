@@ -6,6 +6,7 @@ public class BallServeManager : MonoBehaviour
     public BallController ball;
 
     public float outX = 2.2f;
+    public float outY = -1.0f;
 
     public float startDelay = 0.8f;
     public float respawnDelay = 0.7f;
@@ -41,22 +42,40 @@ public class BallServeManager : MonoBehaviour
         if (ball == null) return;
         if (waiting) return;
 
-        float x = ball.transform.position.x;
+        Vector3 p = ball.transform.position;
 
-        if (x > outX)
+        bool outByX = p.x > outX || p.x < -outX;
+        bool outByY = p.y < outY;
+
+        if (!outByX && !outByY) return;
+
+        // Case 1: ball was hit, but never landed on opponent side first
+        if (ball.WaitingForOpponentTableBounce && !ball.OpponentTableBounceConfirmed)
         {
-            leftScore++;
-            UpdateUI();
-            UpdateServeDir();
-            BeginRespawn();
+            if (ball.LastHitFromLeft)
+                rightScore++;
+            else
+                leftScore++;
         }
-        else if (x < -outX)
+        else
         {
-            rightScore++;
-            UpdateUI();
-            UpdateServeDir();
-            BeginRespawn();
+            // fallback to old edge-based rule
+            if (p.x > outX)
+                leftScore++;
+            else if (p.x < -outX)
+                rightScore++;
+            else if (p.y < outY)
+            {
+                if (ball.LastHitFromLeft)
+                    rightScore++;
+                else
+                    leftScore++;
+            }
         }
+
+        UpdateUI();
+        UpdateServeDir();
+        BeginRespawn();
     }
 
     void UpdateServeDir()

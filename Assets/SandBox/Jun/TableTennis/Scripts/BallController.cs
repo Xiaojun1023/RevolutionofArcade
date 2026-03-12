@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
@@ -11,6 +11,13 @@ public class BallController : MonoBehaviour
     public float zMin = -0.7f;
     public float zMax = 0.7f;
     public float gravity = 9.8f;
+
+    [Header("Table Bounds For Bounce")]
+    public float tableMinX = -1.4f;
+    public float tableMaxX = 1.4f;
+    public float tableMinZ = -0.8f;
+    public float tableMaxZ = 0.8f;
+    public float bounceBoundsPadding = 0.02f;
 
     [Header("Bounce")]
     public float bounce = 0.7f;
@@ -59,6 +66,11 @@ public class BallController : MonoBehaviour
     float spinZ;
 
     Vector3 lastPos;
+
+    // ===== Scoring / rally state =====
+    public bool LastHitFromLeft { get; private set; }
+    public bool WaitingForOpponentTableBounce { get; private set; }
+    public bool OpponentTableBounceConfirmed { get; private set; }
 
     public float GroundY => tableY + ballRadius;
     public Vector3 Velocity => vel;
@@ -119,9 +131,23 @@ public class BallController : MonoBehaviour
 
         float gy = GroundY;
 
-        if (p.y <= gy && vel.y <= 0f)
+        if (IsOverTable(p.x, p.z) && p.y <= gy && vel.y <= 0f)
         {
             p.y = gy;
+
+            // First legal bounce check: did this shot land on opponent side?
+            if (WaitingForOpponentTableBounce && !OpponentTableBounceConfirmed)
+            {
+                bool landedOnOpponentSide =
+                    (LastHitFromLeft && p.x > netX) ||
+                    (!LastHitFromLeft && p.x < netX);
+
+                if (landedOnOpponentSide)
+                {
+                    OpponentTableBounceConfirmed = true;
+                    WaitingForOpponentTableBounce = false;
+                }
+            }
 
             float spinSign = Mathf.Sign(vel.x);
             vel.x += spinSign * spinY * bounceSpinForwardBoost;
@@ -132,10 +158,16 @@ public class BallController : MonoBehaviour
             else vel.y = -vel.y * bounce;
         }
 
-        p.z = Mathf.Clamp(p.z, zMin - 0.2f, zMax + 0.2f);
-
         transform.position = p;
         lastPos = transform.position;
+    }
+
+    bool IsOverTable(float x, float z)
+    {
+        return x >= tableMinX - bounceBoundsPadding &&
+               x <= tableMaxX + bounceBoundsPadding &&
+               z >= tableMinZ - bounceBoundsPadding &&
+               z <= tableMaxZ + bounceBoundsPadding;
     }
 
     public void Freeze(bool value)
@@ -147,6 +179,12 @@ public class BallController : MonoBehaviour
     public void SetPosition(Vector3 p)
     {
         transform.position = p;
+    }
+
+    public void ResetRallyTracking()
+    {
+        WaitingForOpponentTableBounce = false;
+        OpponentTableBounceConfirmed = false;
     }
 
     public void Serve(int dirX, float serveSpeedScale)
@@ -184,6 +222,8 @@ public class BallController : MonoBehaviour
         spinZ = 0f;
         frozen = false;
         nextHitTime = 0f;
+
+        ResetRallyTracking();
     }
 
     void OnTriggerEnter(Collider other)
@@ -206,7 +246,12 @@ public class BallController : MonoBehaviour
         Vector3 paddleVelocity = GetPaddleVelocity(other);
 
         spinY = Mathf.Clamp(paddleVelocity.y * spinInputScale, -maxSpin, maxSpin);
-        spinZ = Mathf.Clamp(paddleVelocity.z * sideSpinInputScale, -maxSideSpin, maxSideSpin);
+        spinZ = Mathf.Clamp(-paddleVelocity.z * sideSpinInputScale, -maxSideSpin, maxSideSpin);
+
+        // Track who hit last, and require next bounce to be on opponent side
+        LastHitFromLeft = paddleX < 0f;
+        WaitingForOpponentTableBounce = true;
+        OpponentTableBounceConfirmed = false;
 
         float landDist = Random.Range(rallyLandingMinFromNet, rallyLandingMaxFromNet);
         float landingX = netX + dx * landDist;
