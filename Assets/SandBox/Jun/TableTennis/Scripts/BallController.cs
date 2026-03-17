@@ -3,7 +3,7 @@
 public class BallController : MonoBehaviour
 {
     [Header("Table / Ball")]
-    public float tableY = 0.82f;
+    public BoxCollider tableTopBounds;
     public float ballRadius = 0.1f;
     public float netX = 0f;
     public float netTopY = 0.98f;
@@ -13,10 +13,6 @@ public class BallController : MonoBehaviour
     public float gravity = 9.8f;
 
     [Header("Table Bounds For Bounce")]
-    public float tableMinX = -1.4f;
-    public float tableMaxX = 1.4f;
-    public float tableMinZ = -0.8f;
-    public float tableMaxZ = 0.8f;
     public float bounceBoundsPadding = 0.02f;
 
     [Header("Bounce")]
@@ -67,12 +63,20 @@ public class BallController : MonoBehaviour
 
     Vector3 lastPos;
 
-    // ===== Scoring / rally state =====
     public bool LastHitFromLeft { get; private set; }
     public bool WaitingForOpponentTableBounce { get; private set; }
     public bool OpponentTableBounceConfirmed { get; private set; }
 
-    public float GroundY => tableY + ballRadius;
+    public float TableTopY
+    {
+        get
+        {
+            if (tableTopBounds == null) return 0.82f;
+            return tableTopBounds.bounds.max.y;
+        }
+    }
+
+    public float GroundY => TableTopY + ballRadius;
     public Vector3 Velocity => vel;
 
     void Start()
@@ -135,7 +139,6 @@ public class BallController : MonoBehaviour
         {
             p.y = gy;
 
-            // First legal bounce check: did this shot land on opponent side?
             if (WaitingForOpponentTableBounce && !OpponentTableBounceConfirmed)
             {
                 bool landedOnOpponentSide =
@@ -164,10 +167,14 @@ public class BallController : MonoBehaviour
 
     bool IsOverTable(float x, float z)
     {
-        return x >= tableMinX - bounceBoundsPadding &&
-               x <= tableMaxX + bounceBoundsPadding &&
-               z >= tableMinZ - bounceBoundsPadding &&
-               z <= tableMaxZ + bounceBoundsPadding;
+        if (tableTopBounds == null) return true;
+
+        Bounds b = tableTopBounds.bounds;
+
+        return x >= b.min.x - bounceBoundsPadding &&
+               x <= b.max.x + bounceBoundsPadding &&
+               z >= b.min.z - bounceBoundsPadding &&
+               z <= b.max.z + bounceBoundsPadding;
     }
 
     public void Freeze(bool value)
@@ -248,7 +255,6 @@ public class BallController : MonoBehaviour
         spinY = Mathf.Clamp(paddleVelocity.y * spinInputScale, -maxSpin, maxSpin);
         spinZ = Mathf.Clamp(-paddleVelocity.z * sideSpinInputScale, -maxSideSpin, maxSideSpin);
 
-        // Track who hit last, and require next bounce to be on opponent side
         LastHitFromLeft = paddleX < 0f;
         WaitingForOpponentTableBounce = true;
         OpponentTableBounceConfirmed = false;
