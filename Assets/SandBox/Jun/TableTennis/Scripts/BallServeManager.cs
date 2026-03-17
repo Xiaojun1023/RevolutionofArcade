@@ -12,14 +12,18 @@ public class BallServeManager : MonoBehaviour
     public float respawnDelay = 0.7f;
 
     public float respawnSpeedScale = 0.9f;
-
     public float respawnHoverHeight = 0.25f;
 
     public bool useTableTennisServeRule = true;
 
-    public TMP_Text scoreBoardText;
+    [Header("Score UI")]
+    public TMP_Text leftNameText;
+    public TMP_Text scoreText;
+    public TMP_Text rightNameText;
+    public ScorePulse scorePulse;
+
     public string leftLabel = "PLAYER";
-    public string rightLabel = "CPU";
+    public string rightLabel = "AI";
 
     int leftScore;
     int rightScore;
@@ -49,7 +53,6 @@ public class BallServeManager : MonoBehaviour
 
         if (!outByX && !outByY) return;
 
-        // Case 1: ball was hit, but never landed on opponent side first
         if (ball.WaitingForOpponentTableBounce && !ball.OpponentTableBounceConfirmed)
         {
             if (ball.LastHitFromLeft)
@@ -59,7 +62,6 @@ public class BallServeManager : MonoBehaviour
         }
         else
         {
-            // fallback to old edge-based rule
             if (p.x > outX)
                 leftScore++;
             else if (p.x < -outX)
@@ -74,6 +76,10 @@ public class BallServeManager : MonoBehaviour
         }
 
         UpdateUI();
+
+        if (scorePulse != null)
+            scorePulse.PlayPulse();
+
         UpdateServeDir();
         BeginRespawn();
     }
@@ -87,7 +93,6 @@ public class BallServeManager : MonoBehaviour
         }
 
         int total = leftScore + rightScore;
-
         bool deuce = leftScore >= 10 && rightScore >= 10;
         int interval = deuce ? 1 : 2;
 
@@ -130,7 +135,13 @@ public class BallServeManager : MonoBehaviour
 
     void UpdateUI()
     {
-        if (scoreBoardText != null)
-            scoreBoardText.text = leftLabel + " " + leftScore + "  -  " + rightScore + " " + rightLabel;
+        if (leftNameText != null)
+            leftNameText.text = leftLabel;
+
+        if (scoreText != null)
+            scoreText.text = leftScore.ToString("00") + " : " + rightScore.ToString("00");
+
+        if (rightNameText != null)
+            rightNameText.text = rightLabel;
     }
 }

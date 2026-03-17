@@ -36,7 +36,7 @@ public class TicketMachineInteract : MonoBehaviour
             walletInRange.AddCoins(coinsPerPress);
 
             if (promptUI != null)
-                promptUI.Show("Coin purchase successful");
+                promptUI.Show("PURCHASE SUCCESSFUL");
         }
     }
 
@@ -70,7 +70,7 @@ public class TicketMachineInteract : MonoBehaviour
 
         if (shouldShow && !isPromptVisible)
         {
-            promptUI.Show("Press E to buy machine coins");
+            promptUI.Show("PRESS [E] TO BUY COINS");
             isPromptVisible = true;
         }
         else if (!shouldShow && isPromptVisible)

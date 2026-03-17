@@ -40,7 +40,7 @@ public class ArcadeMachineCoinGate : MonoBehaviour
             return;
         }
 
-        string msg = walletInRange.Coins >= coinCostToPlay ? "Press E to insert coin" : "No Coins";
+        string msg = walletInRange.Coins >= coinCostToPlay ? "PRESS [E] TO PLAY" : "NO COINS";
         SetPrompt(true, msg);
 
         if (Input.GetKeyDown(interactKey))
@@ -48,12 +48,12 @@ public class ArcadeMachineCoinGate : MonoBehaviour
             if (walletInRange.TrySpendCoins(coinCostToPlay))
             {
                 SetPrompt(false, "");
-                if (promptUI != null) promptUI.Show("Starting Game");
+                if (promptUI != null) promptUI.Show("STARTING GAME...");
                 if (session != null) session.TryStartSession();
             }
             else
             {
-                if (promptUI != null) promptUI.Show("No Coins");
+                if (promptUI != null) promptUI.Show("NO COINS");
             }
         }
     }

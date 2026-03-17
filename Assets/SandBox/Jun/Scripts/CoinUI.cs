@@ -5,6 +5,9 @@ public class CoinUI : MonoBehaviour
 {
     public TextMeshProUGUI coinText;
     public CoinWallet playerWallet;
+    public CoinPulse coinPulse;
+
+    int lastCoins = -1;
 
     void OnEnable()
     {
@@ -23,5 +26,13 @@ public class CoinUI : MonoBehaviour
     {
         if (coinText != null)
             coinText.text = coins.ToString("D2");
+
+        if (lastCoins != -1 && lastCoins != coins)
+        {
+            if (coinPulse != null)
+                coinPulse.PlayPulse();
+        }
+
+        lastCoins = coins;
     }
 }
