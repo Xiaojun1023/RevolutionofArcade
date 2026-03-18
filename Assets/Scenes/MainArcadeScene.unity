@@ -17207,7 +17207,7 @@ PrefabInstance:
     - target: {fileID: 5755618959520372838, guid: 69297256cf40ce140ac7044dd48a5391, type: 3}
       propertyPath: promptUI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 403336025}
     - target: {fileID: 5755618959520372838, guid: 69297256cf40ce140ac7044dd48a5391, type: 3}
       propertyPath: sceneToLoad
       value: TennisforTwoScene
@@ -17341,7 +17341,7 @@ MonoBehaviour:
   forceAspect: 1
   contentAspect: 1.7777778
   idleScreenshot: {fileID: 2800000, guid: 125d78073d33dcb42949bd15279fc78f, type: 3}
-  promptUI: {fileID: 0}
+  promptUI: {fileID: 403336025}
 --- !u!114 &966452604
 MonoBehaviour:
   m_ObjectHideFlags: 0
