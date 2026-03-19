@@ -6,14 +6,20 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenuScene.unity
+    guid: 5c752be01c59cb540b4984f2342a3bbb
+  - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: 086ef0a7726734549b9fbe95a543dbb6
+  - enabled: 1
     path: Assets/Scenes/MainArcadeScene.unity
     guid: 041487d19c6124b8886368ab6ef1aeb9
   - enabled: 1
-    path: Assets/Scenes/TennisforTwoScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
     path: Assets/Scenes/TableTennisScene.unity
     guid: ec512e277ffabc94c8d214d3d1c4f243
+  - enabled: 1
+    path: Assets/Scenes/TennisforTwoScene.unity
+    guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 0
     path: Assets/SandBox/Xiaoyu/XiaoyuScene.unity
     guid: 3ae492e1173da4872a5b7438d5a89d94
