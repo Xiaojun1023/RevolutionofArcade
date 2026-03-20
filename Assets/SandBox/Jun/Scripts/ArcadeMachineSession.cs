@@ -61,6 +61,9 @@ public class ArcadeMachineSession : MonoBehaviour
         if (promptUI != null)
             promptUI.Hide();
 
+        if (ArcadeGameManager.Instance != null)
+            ArcadeGameManager.Instance.SetInsideMachineSession(true);
+
         running = StartCoroutine(LoadRoutine());
     }
 
@@ -118,6 +121,9 @@ public class ArcadeMachineSession : MonoBehaviour
         loaded = false;
         running = null;
         IsInSession = false;
+
+        if (ArcadeGameManager.Instance != null)
+            ArcadeGameManager.Instance.SetInsideMachineSession(false);
     }
 
     void FillRTWithIdle()
