@@ -23,6 +23,8 @@ public class ArcadeMachineSession : MonoBehaviour
 
     public SimplePromptUI promptUI;
 
+    [SerializeField] private ArcadeBGMController arcadeBGMController;
+
     public bool IsInSession { get; private set; }
 
     Vector3 camPosBefore;
@@ -64,6 +66,9 @@ public class ArcadeMachineSession : MonoBehaviour
         if (ArcadeGameManager.Instance != null)
             ArcadeGameManager.Instance.SetInsideMachineSession(true);
 
+        if (arcadeBGMController != null)
+            arcadeBGMController.SetInsideMachine(true);
+
         running = StartCoroutine(LoadRoutine());
     }
 
@@ -74,6 +79,9 @@ public class ArcadeMachineSession : MonoBehaviour
 
         if (promptUI != null)
             promptUI.Hide();
+
+        if (arcadeBGMController != null)
+            arcadeBGMController.SetInsideMachine(false);
 
         running = StartCoroutine(UnloadRoutine());
     }

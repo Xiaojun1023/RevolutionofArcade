@@ -54,6 +54,18 @@ public class BallController : MonoBehaviour
     public float bounceSideSpinBoost = 0.02f;
     public float sideTargetZInfluence = 0.06f;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip paddleHitClip;
+    public AudioClip tableBounceClip;
+    public AudioClip outGroundClip;
+    [Range(0f, 1f)] public float paddleHitVolume = 1f;
+    [Range(0f, 1f)] public float tableBounceVolume = 1f;
+    [Range(0f, 1f)] public float outGroundVolume = 1f;
+    public float outGroundSoundDelay = 0.15f;
+    public float minBounceSoundInterval = 0.05f;
+    public float minGroundSoundInterval = 0.08f;
+
     Vector3 vel;
     float nextHitTime;
     bool frozen;
@@ -62,10 +74,13 @@ public class BallController : MonoBehaviour
     float spinZ;
 
     Vector3 lastPos;
+    float lastBounceSoundTime = -999f;
+    float lastGroundSoundTime = -999f;
 
     public bool LastHitFromLeft { get; private set; }
     public bool WaitingForOpponentTableBounce { get; private set; }
     public bool OpponentTableBounceConfirmed { get; private set; }
+    public bool HasOutGroundContact { get; private set; }
 
     public float TableTopY
     {
@@ -134,10 +149,12 @@ public class BallController : MonoBehaviour
         Vector3 p = p1;
 
         float gy = GroundY;
+        bool overTable = IsOverTable(p.x, p.z);
 
-        if (IsOverTable(p.x, p.z) && p.y <= gy && vel.y <= 0f)
+        if (overTable && p.y <= gy && vel.y <= 0f)
         {
             p.y = gy;
+            PlayTableBounceSound();
 
             if (WaitingForOpponentTableBounce && !OpponentTableBounceConfirmed)
             {
@@ -159,6 +176,19 @@ public class BallController : MonoBehaviour
 
             if (Mathf.Abs(vel.y) < stickYVel) vel.y = 0f;
             else vel.y = -vel.y * bounce;
+        }
+        else if (!overTable && p.y <= gy && vel.y <= 0f)
+        {
+            p.y = gy;
+
+            if (!HasOutGroundContact)
+            {
+                HasOutGroundContact = true;
+                Invoke(nameof(PlayOutGroundSound), outGroundSoundDelay);
+            }
+
+            vel = Vector3.zero;
+            frozen = true;
         }
 
         transform.position = p;
@@ -192,6 +222,7 @@ public class BallController : MonoBehaviour
     {
         WaitingForOpponentTableBounce = false;
         OpponentTableBounceConfirmed = false;
+        HasOutGroundContact = false;
     }
 
     public void Serve(int dirX, float serveSpeedScale)
@@ -240,6 +271,7 @@ public class BallController : MonoBehaviour
         if (Time.time < nextHitTime) return;
 
         nextHitTime = Time.time + hitCooldown;
+        PlayPaddleHitSound();
 
         float paddleX = other.transform.position.x;
         float dirX = paddleX < 0f ? 1f : -1f;
@@ -258,6 +290,7 @@ public class BallController : MonoBehaviour
         LastHitFromLeft = paddleX < 0f;
         WaitingForOpponentTableBounce = true;
         OpponentTableBounceConfirmed = false;
+        HasOutGroundContact = false;
 
         float landDist = Random.Range(rallyLandingMinFromNet, rallyLandingMaxFromNet);
         float landingX = netX + dx * landDist;
@@ -331,5 +364,29 @@ public class BallController : MonoBehaviour
         float t = (netX - p0.x) / vx;
         float y = p0.y + v0.y * t - 0.5f * gravity * t * t;
         return y;
+    }
+
+    void PlayPaddleHitSound()
+    {
+        if (audioSource == null || paddleHitClip == null) return;
+        audioSource.PlayOneShot(paddleHitClip, paddleHitVolume);
+    }
+
+    void PlayTableBounceSound()
+    {
+        if (audioSource == null || tableBounceClip == null) return;
+        if (Time.time - lastBounceSoundTime < minBounceSoundInterval) return;
+
+        lastBounceSoundTime = Time.time;
+        audioSource.PlayOneShot(tableBounceClip, tableBounceVolume);
+    }
+
+    void PlayOutGroundSound()
+    {
+        if (audioSource == null || outGroundClip == null) return;
+        if (Time.time - lastGroundSoundTime < minGroundSoundInterval) return;
+
+        lastGroundSoundTime = Time.time;
+        audioSource.PlayOneShot(outGroundClip, outGroundVolume);
     }
 }

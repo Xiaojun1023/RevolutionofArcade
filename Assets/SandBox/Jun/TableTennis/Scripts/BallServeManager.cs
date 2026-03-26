@@ -37,6 +37,14 @@ public class BallServeManager : MonoBehaviour
     public MonoBehaviour playerLookScript;
     public bool freezeTimeOnMatchEnd = false;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip pointScoredClip;
+    public AudioClip playerWinClip;
+    public AudioClip aiWinClip;
+    [Range(0f, 1f)] public float pointVolume = 1f;
+    [Range(0f, 1f)] public float winVolume = 1f;
+
     int playerScore;
     int aiScore;
 
@@ -66,8 +74,9 @@ public class BallServeManager : MonoBehaviour
 
         bool outByX = p.x > outX || p.x < -outX;
         bool outByY = p.y < outY;
+        bool outByGroundContact = ball.HasOutGroundContact;
 
-        if (!outByX && !outByY) return;
+        if (!outByX && !outByY && !outByGroundContact) return;
 
         AwardPointFromCurrentBallState();
 
@@ -94,27 +103,32 @@ public class BallServeManager : MonoBehaviour
             else
                 AwardPointToLeftSide();
 
+            PlayPointSound();
             return;
         }
 
         if (p.x > outX)
         {
             AwardPointToLeftSide();
+            PlayPointSound();
             return;
         }
 
         if (p.x < -outX)
         {
             AwardPointToRightSide();
+            PlayPointSound();
             return;
         }
 
-        if (p.y < outY)
+        if (ball.HasOutGroundContact || p.y < outY)
         {
             if (ball.LastHitFromLeft)
                 AwardPointToRightSide();
             else
                 AwardPointToLeftSide();
+
+            PlayPointSound();
         }
     }
 
@@ -148,6 +162,11 @@ public class BallServeManager : MonoBehaviour
             ball.Freeze(true);
 
         bool playerWon = playerScore > aiScore;
+
+        if (playerWon)
+            PlayPlayerWinSound();
+        else
+            PlayAIWinSound();
 
         if (matchResultUI != null)
         {
@@ -280,5 +299,23 @@ public class BallServeManager : MonoBehaviour
         }
 
         Invoke(nameof(ServeStart), startDelay);
+    }
+
+    void PlayPointSound()
+    {
+        if (audioSource == null || pointScoredClip == null) return;
+        audioSource.PlayOneShot(pointScoredClip, pointVolume);
+    }
+
+    void PlayPlayerWinSound()
+    {
+        if (audioSource == null || playerWinClip == null) return;
+        audioSource.PlayOneShot(playerWinClip, winVolume);
+    }
+
+    void PlayAIWinSound()
+    {
+        if (audioSource == null || aiWinClip == null) return;
+        audioSource.PlayOneShot(aiWinClip, winVolume);
     }
 }
