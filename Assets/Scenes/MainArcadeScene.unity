@@ -11640,7 +11640,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArcadeBGMController
   bgmSource: {fileID: 661074372}
   outsideVolume: 0.05
-  insideVolume: 0.16
+  insideVolume: 0.15
   machineVolume: 0.02
   fadeSpeed: 2
 --- !u!1001 &666112622
