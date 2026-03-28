@@ -21,7 +21,7 @@ public class BallServeManager : MonoBehaviour
     public int winBy = 2;
 
     [Header("Side Mapping")]
-    public bool playerIsLeft = true;
+    public bool playerIsRight = true;
 
     [Header("Score UI")]
     public TMP_Text leftNameText;
@@ -134,7 +134,7 @@ public class BallServeManager : MonoBehaviour
 
     void AwardPointToLeftSide()
     {
-        if (playerIsLeft)
+        if (playerIsRight)
             playerScore++;
         else
             aiScore++;
@@ -142,7 +142,7 @@ public class BallServeManager : MonoBehaviour
 
     void AwardPointToRightSide()
     {
-        if (playerIsLeft)
+        if (playerIsRight)
             aiScore++;
         else
             playerScore++;
@@ -255,13 +255,13 @@ public class BallServeManager : MonoBehaviour
     void UpdateUI()
     {
         if (leftNameText != null)
-            leftNameText.text = playerIsLeft ? "PLAYER" : "AI";
+            leftNameText.text = playerIsRight ? "AI" : "PLAYER";
 
         if (rightNameText != null)
-            rightNameText.text = playerIsLeft ? "AI" : "PLAYER";
+            rightNameText.text = playerIsRight ? "PLAYER" : "AI";
 
-        int leftScore = playerIsLeft ? playerScore : aiScore;
-        int rightScore = playerIsLeft ? aiScore : playerScore;
+        int leftScore = playerIsRight ? aiScore : playerScore;
+        int rightScore = playerIsRight ? playerScore : aiScore;
 
         if (scoreText != null)
             scoreText.text = leftScore.ToString("00") + " : " + rightScore.ToString("00");
