@@ -9,9 +9,16 @@ public class TicketMachineInteract : MonoBehaviour
     [Range(0f, 1f)]
     public float faceDotThreshold = 0.7f;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip purchaseSfx;
+
     private CoinWallet walletInRange;
     private Transform playerTransform;
     private bool isPromptVisible;
+
+    public float purchaseCooldown = 0.2f;
+    private float nextPurchaseTime;
 
     void Start()
     {
@@ -31,12 +38,16 @@ public class TicketMachineInteract : MonoBehaviour
 
         SetPrompt(facing);
 
-        if (facing && Input.GetKeyDown(interactKey))
+        if (facing && Input.GetKeyDown(interactKey) && Time.time >= nextPurchaseTime)
         {
+            nextPurchaseTime = Time.time + purchaseCooldown;
+
             walletInRange.AddCoins(coinsPerPress);
 
             if (promptUI != null)
                 promptUI.Show("PURCHASE SUCCESSFUL");
+
+            PlayPurchaseSfx();
         }
     }
 
@@ -78,5 +89,15 @@ public class TicketMachineInteract : MonoBehaviour
             promptUI.Hide();
             isPromptVisible = false;
         }
+    }
+
+    private void PlayPurchaseSfx()
+    {
+        if (purchaseSfx == null) return;
+
+        if (audioSource != null)
+            audioSource.PlayOneShot(purchaseSfx);
+        else
+            AudioSource.PlayClipAtPoint(purchaseSfx, transform.position);
     }
 }

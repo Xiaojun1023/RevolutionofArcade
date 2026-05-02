@@ -11,6 +11,7 @@ public class SimplePromptUI : MonoBehaviour
     public float fadeDuration = 0.12f;
 
     Coroutine fadeRoutine;
+    Coroutine autoHideRoutine;
 
     void Awake()
     {
@@ -33,6 +34,12 @@ public class SimplePromptUI : MonoBehaviour
     {
         if (promptText == null) return;
 
+        if (autoHideRoutine != null)
+        {
+            StopCoroutine(autoHideRoutine);
+            autoHideRoutine = null;
+        }
+
         promptText.text = message;
 
         if (promptRoot != null && !promptRoot.activeSelf)
@@ -44,8 +51,31 @@ public class SimplePromptUI : MonoBehaviour
         fadeRoutine = StartCoroutine(FadeRoutine(1f));
     }
 
+    public void ShowForSeconds(string message, float duration)
+    {
+        Show(message);
+
+        if (autoHideRoutine != null)
+            StopCoroutine(autoHideRoutine);
+
+        autoHideRoutine = StartCoroutine(AutoHideRoutine(duration));
+    }
+
+    IEnumerator AutoHideRoutine(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        Hide();
+        autoHideRoutine = null;
+    }
+
     public void Hide()
     {
+        if (autoHideRoutine != null)
+        {
+            StopCoroutine(autoHideRoutine);
+            autoHideRoutine = null;
+        }
+
         if (!gameObject.activeInHierarchy)
         {
             HideImmediate();
@@ -70,6 +100,12 @@ public class SimplePromptUI : MonoBehaviour
         {
             StopCoroutine(fadeRoutine);
             fadeRoutine = null;
+        }
+
+        if (autoHideRoutine != null)
+        {
+            StopCoroutine(autoHideRoutine);
+            autoHideRoutine = null;
         }
 
         if (canvasGroup != null)

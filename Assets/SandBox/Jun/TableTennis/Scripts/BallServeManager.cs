@@ -94,58 +94,30 @@ public class BallServeManager : MonoBehaviour
 
     void AwardPointFromCurrentBallState()
     {
-        Vector3 p = ball.transform.position;
+        if (ball == null) return;
 
-        if (ball.WaitingForOpponentTableBounce && !ball.OpponentTableBounceConfirmed)
-        {
-            if (ball.LastHitFromLeft)
-                AwardPointToRightSide();
-            else
-                AwardPointToLeftSide();
-
-            PlayPointSound();
-            return;
-        }
-
-        if (p.x > outX)
-        {
-            AwardPointToLeftSide();
-            PlayPointSound();
-            return;
-        }
-
-        if (p.x < -outX)
-        {
+        if (ball.IsLeftSideExpectedToReturn)
             AwardPointToRightSide();
-            PlayPointSound();
-            return;
-        }
+        else
+            AwardPointToLeftSide();
 
-        if (ball.HasOutGroundContact || p.y < outY)
-        {
-            if (ball.LastHitFromLeft)
-                AwardPointToRightSide();
-            else
-                AwardPointToLeftSide();
-
-            PlayPointSound();
-        }
+        PlayPointSound();
     }
 
     void AwardPointToLeftSide()
     {
         if (playerIsRight)
-            playerScore++;
-        else
             aiScore++;
+        else
+            playerScore++;
     }
 
     void AwardPointToRightSide()
     {
         if (playerIsRight)
-            aiScore++;
-        else
             playerScore++;
+        else
+            aiScore++;
     }
 
     bool TryHandleMatchEnd()

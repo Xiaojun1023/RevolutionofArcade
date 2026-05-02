@@ -82,6 +82,11 @@ public class BallController : MonoBehaviour
     public bool OpponentTableBounceConfirmed { get; private set; }
     public bool HasOutGroundContact { get; private set; }
 
+    // 新增：
+    // true = 左边本来该接球
+    // false = 右边本来该接球
+    public bool IsLeftSideExpectedToReturn { get; private set; }
+
     public float TableTopY
     {
         get
@@ -262,6 +267,15 @@ public class BallController : MonoBehaviour
         nextHitTime = 0f;
 
         ResetRallyTracking();
+
+        // 记录这球是从哪边发出来的
+        LastHitFromLeft = dirX > 0f;
+
+        // 关键修复：
+        // 球往哪边飞，哪边就“必须回球”
+        // dirX > 0 表示球往右飞 -> 右边该接 -> 左边不该接 -> false
+        // dirX < 0 表示球往左飞 -> 左边该接 -> true
+        IsLeftSideExpectedToReturn = dirX < 0f;
     }
 
     void OnTriggerEnter(Collider other)
@@ -291,6 +305,11 @@ public class BallController : MonoBehaviour
         WaitingForOpponentTableBounce = true;
         OpponentTableBounceConfirmed = false;
         HasOutGroundContact = false;
+
+        // 关键修复：
+        // 左边刚打完 -> 下一拍轮到右边接 -> false
+        // 右边刚打完 -> 下一拍轮到左边接 -> true
+        IsLeftSideExpectedToReturn = !LastHitFromLeft;
 
         float landDist = Random.Range(rallyLandingMinFromNet, rallyLandingMaxFromNet);
         float landingX = netX + dx * landDist;

@@ -914,7 +914,7 @@ MonoBehaviour:
   respawnSpeedScale: 0.7
   respawnHoverHeight: 0.25
   useTableTennisServeRule: 1
-  pointsToWin: 11
+  pointsToWin: 7
   winBy: 2
   playerIsRight: 0
   leftNameText: {fileID: 90002895}
@@ -927,11 +927,11 @@ MonoBehaviour:
   playerLookScript: {fileID: 696685640}
   freezeTimeOnMatchEnd: 0
   audioSource: {fileID: 744690215}
-  pointScoredClip: {fileID: 0}
-  playerWinClip: {fileID: 0}
-  aiWinClip: {fileID: 0}
-  pointVolume: 1
-  winVolume: 1
+  pointScoredClip: {fileID: 8300000, guid: 227024775d0c34f03a338e9f687962f9, type: 3}
+  playerWinClip: {fileID: 8300000, guid: f44dec1efbc9c4843bf21094a68f3dfa, type: 3}
+  aiWinClip: {fileID: 8300000, guid: 4551b875a324f41c8b72d76dbc1ced82, type: 3}
+  pointVolume: 0.08
+  winVolume: 0.2
 --- !u!4 &744690214
 Transform:
   m_ObjectHideFlags: 0

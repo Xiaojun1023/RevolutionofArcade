@@ -14,7 +14,7 @@ public class ArcadeMachineSession : MonoBehaviour
     public Transform screenLookAt;
 
     public float zoomDuration = 0.35f;
-    public KeyCode exitKey = KeyCode.Escape;
+    public KeyCode exitKey = KeyCode.E;
 
     public bool forceAspect = true;
     public float contentAspect = 16f / 9f;
@@ -109,6 +109,8 @@ public class ArcadeMachineSession : MonoBehaviour
 
         loaded = true;
         running = null;
+
+        ShowExitPrompt();
     }
 
     IEnumerator UnloadRoutine()
@@ -132,6 +134,21 @@ public class ArcadeMachineSession : MonoBehaviour
 
         if (ArcadeGameManager.Instance != null)
             ArcadeGameManager.Instance.SetInsideMachineSession(false);
+    }
+
+    void ShowExitPrompt()
+    {
+        if (promptUI == null) return;
+
+        promptUI.ShowForSeconds($"PRESS [{GetKeyLabel(exitKey)}] TO ZOOM OUT", 2f);
+    }
+
+    static string GetKeyLabel(KeyCode key)
+    {
+        if (key == KeyCode.Escape)
+            return "ESC";
+
+        return key.ToString().ToUpperInvariant();
     }
 
     void FillRTWithIdle()

@@ -7,7 +7,9 @@ public static class Loader
     {
         MainMenuScene,
         LoadingScene,
+        CreditPage,
         MainArcadeScene,
+        New_MainArcadeScene,
     }
 
     private static Scene targetScene;

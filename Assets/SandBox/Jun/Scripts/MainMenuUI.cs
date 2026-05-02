@@ -5,13 +5,19 @@ using UnityEngine.UI;
 public class MainMenuUI : MonoBehaviour
 {
     [SerializeField] private Button playButton;
+    [SerializeField] private Button creditButton;
     [SerializeField] private Button quitButton;
 
     private void Awake()
     {
         playButton.onClick.AddListener(() =>
         {
-            Loader.Load(Loader.Scene.MainArcadeScene);
+            Loader.Load(Loader.Scene.New_MainArcadeScene);
+        });
+
+        creditButton.onClick.AddListener(() =>
+        {
+            Loader.Load(Loader.Scene.CreditPage);
         });
 
         quitButton.onClick.AddListener(QuitGame);

@@ -13,6 +13,10 @@ public class TennisLauncher3D : MonoBehaviour
     public bool isLeft = true;
     public KeyCode hitKey = KeyCode.Space;
 
+    [Header("Player Input")]
+    public bool allowPlayerInput = true;
+    public bool allowMouseLeft = true;
+
     [Header("Audio")]
     public AudioSource hitAudio;
 
@@ -24,7 +28,12 @@ public class TennisLauncher3D : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(hitKey))
+        if (!allowPlayerInput) return;
+
+        bool pressedKeyboard = Input.GetKeyDown(hitKey);
+        bool pressedMouse = allowMouseLeft && Input.GetMouseButtonDown(0);
+
+        if (pressedKeyboard || pressedMouse)
             TryLaunch();
     }
 
@@ -35,6 +44,9 @@ public class TennisLauncher3D : MonoBehaviour
         if (!ballReset.CanSideHit(isLeft, ballRb)) return;
 
         if (isLeft && ballRb.position.x > -2f)
+            return;
+
+        if (!isLeft && ballRb.position.x < 2f)
             return;
 
         ballReset.UnfreezeForLaunch();
@@ -54,7 +66,7 @@ public class TennisLauncher3D : MonoBehaviour
 
         ballRb.linearVelocity = v;
 
-        if (racketFollower) 
+        if (racketFollower)
             racketFollower.LockAfterHit();
 
         if (hitAudio)
