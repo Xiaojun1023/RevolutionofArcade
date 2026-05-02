@@ -7,23 +7,21 @@ The project highlights the evolution of ball-based arcade games through playable
 
 ## Trailer
 
-https://youtu.be/TxRU7QCkbRs?si=H7fpe86Lu4qhNe4J
+[Revolution of Arcade - Trailer](https://youtu.be/TxRU7QCkbRs?si=H7fpe86Lu4qhNe4J)
 
 ---
 
-## Screenshots
+## Previews
 
-![Main Menu Screenshot](insert-image-link-here)
+<img width="800" height="450" alt="arcade_1920x1080" src="https://github.com/user-attachments/assets/4a73344b-5761-4316-a2b3-85ace3bdf8d6" />
 
-![Arcade Store Screenshot](insert-image-link-here)
-
-![Mini Game Screenshot](insert-image-link-here)
+<img width="800" height="450" alt="arcade_floor_1920x1080" src="https://github.com/user-attachments/assets/35b043df-e7e0-4ec5-bfb9-cd8372b13496" />
 
 ---
 
 ## About the Project
 
-**The Arcade** is a game project built around the idea of exploring an arcade store and playing different machines inside it.  
+**Revolution of Arcade** is a game project built around the idea of exploring an arcade store and playing different machines inside it.  
 Players can walk through the arcade environment, collect coins, interact with cabinets, and enter mini games that represent different stages in the development of classic ball games.
 
 The experience combines:
@@ -77,36 +75,42 @@ The goal of the project is to create a nostalgic arcade experience while showing
 - **Space** - Jump
 
 ### Mini Games
-[Insert mini game controls here]
+
+**Table Tennis**
+- Move the mouse to control the paddle.
+- Hit the ball by moving the paddle into the ball.
+
+**Pong**
+- Press **W** and **S** to move the paddle up and down.
+
+**Tennis for Two**
+- Press **W** and **S** to adjust the hitting angle.
+- Press **Space** to hit the ball.
 
 ---
 
 ## Screens / Media
 
 ### Main Menu
-[Insert image here]
+<img width="800" height="450" alt="Screenshot 2026-04-14 221344" src="https://github.com/user-attachments/assets/22e6d61e-d705-43d3-9b7a-5f6640952ddd" />
 
 ### Arcade Store
-[Insert image here]
+<img width="800" height="450" alt="Screenshot 2026-04-14 221609" src="https://github.com/user-attachments/assets/f153b67a-3016-4c1c-b93b-ed0e984dfbbe" />
 
 ### Pong
-[Insert image here]
+<img width="800" height="450" alt="Screenshot 2026-05-01 220321" src="https://github.com/user-attachments/assets/64ff0905-57a0-4d1e-81a1-c41e721290b0" />
 
 ### Ping Pong
-[Insert image here]
+<img width="800" height="450" alt="Screenshot 2026-05-01 220333" src="https://github.com/user-attachments/assets/937e9b65-f074-4696-ad67-d0e3a7c4822a" />
 
 ### Tennis for Two
-[Insert image here]
+<img width="800" height="450" alt="Screenshot 2026-05-01 220311" src="https://github.com/user-attachments/assets/1532ea38-ba2b-4292-a7c6-29b8a410f3aa" />
 
 ---
 
 ## Built With
 
 - **Unity**
-- **C#**
-- **TextMeshPro**
-- **RenderTexture system**
-- **Unity Audio system**
 
 ---
 
@@ -128,16 +132,7 @@ All core gameplay systems, mini games, and presentation features have been imple
 
 ## Credits
 
-[Insert team member names here]
-
-[Insert asset credits here]
-
-[Insert audio credits here]
+**Jun Gong**  
+**Xiaoyu Zhao**
 
 ---
-
-## Additional Links
-
-- Trailer: [Insert trailer link here]
-- Gameplay video: [Insert gameplay video link here]
-- Build download: [Insert build link here]
