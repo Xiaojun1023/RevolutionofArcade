@@ -1,4 +1,4 @@
-# The Arcade
+# Revolution of Arcade
 
 A playable arcade experience that lets players explore an interactive arcade space and step into classic-inspired mini games.  
 The project highlights the evolution of ball-based arcade games through playable experiences such as **Pong**, **Ping Pong**, and **Tennis for Two**.
@@ -7,7 +7,7 @@ The project highlights the evolution of ball-based arcade games through playable
 
 ## Trailer
 
-[[Insert trailer link here]](https://youtu.be/TxRU7QCkbRs?si=H7fpe86Lu4qhNe4J)
+https://youtu.be/TxRU7QCkbRs?si=H7fpe86Lu4qhNe4J
 
 ---
 
