@@ -135,4 +135,8 @@ All core gameplay systems, mini games, and presentation features have been imple
 **Jun Gong**  
 **Xiaoyu Zhao**
 
+## Itch.io Link ##
+
+https://jun1023.itch.io/revolution-of-arcade
+
 ---
